@@ -19,6 +19,7 @@ fn debug_workspaces(connection: &mut I3Connection) -> Result<(), ::i3ipc::Messag
     let &Outputs { ref outputs } = &connection.get_outputs().unwrap();
     let screens = outputs.iter().filter(|output| output.current_workspace.is_some());
     let Workspaces { ref workspaces } = connection.get_workspaces()?;
+    print!("\r");
     for &Output { ref name, .. } in screens {
         print!("[ {}: ", name);
         let workspaces_on_this_screen = workspaces.iter().filter(|ws| &ws.output == name);
@@ -31,7 +32,6 @@ fn debug_workspaces(connection: &mut I3Connection) -> Result<(), ::i3ipc::Messag
         }
         print!(" ] ");
     }
-    println!();
     let _ = io::stdout().flush();
     Ok(())
 }
